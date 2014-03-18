@@ -1,0 +1,28 @@
+#!/usr/bin/env ruby
+# encoding: utf-8
+
+require 'vodstamp'
+
+if ARGV.length > 0
+	vodstamp = Vodstamp.new;
+	actual_command = ARGV.shift
+	command = actual_command.gsub ':', '_'
+	if vodstamp.respond_to? command
+		vodstamp.send command, ARGV
+	else # ! vodstamp.respond_to? command
+		puts "  err: unknown command #{actual_command}"
+	end#if
+else # ARGV.length == 0
+
+puts
+puts <<eos
+ Commands
+ ------------------------------------------------------------------------------
+   vodstamp version                                  - current version
+   vodstamp all <input> <output>                     - filter timestamp messages based only on marker
+   vodstamp filter <input> <output> <source>         - filter timestamp messages from a chat log
+   vodstamp build <input> <output> <splits> <offset> - build timestamps
+
+eos
+
+end#if
